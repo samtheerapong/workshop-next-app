@@ -27,7 +27,8 @@ export const list = async (req, res) => {
 // ดึงตามค่า id
 export const read = async (req, res) => {
     try {
-        const readData = await Product.findOne({ _id: req.query.id }).exec()
+        const id = req.query.id
+        const readData = await Product.findOne({ _id: id }).exec()
         console.log(readData)
         res.send(readData)
     } catch {
@@ -49,10 +50,14 @@ export const update = async (req, res) => {
     }
 }
 
+
+//ลบจาก id
 export const remove = async (req, res) => {
     try {
-        console.log('Crontroller Remove')
-        res.send('Crontroller Remove')
+        const id = req.query.id
+        const deleted = await Product.findByIdAndDelete({ _id: id }).exec()
+        console.log(deleted)
+        res.send(deleted)
     } catch {
         console.log(err)
         res.status(400).send('Remove failed')
