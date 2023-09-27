@@ -1,11 +1,9 @@
 import Product from "@/server/models/products";
 
+// สร้าง
 export const create = async (req, res) => {
     try {
         const newproduct = await new Product(req.body).save();
-
-
-
         console.log(newproduct)
         res.send(newproduct)
     } catch {
@@ -14,30 +12,37 @@ export const create = async (req, res) => {
     }
 }
 
+// ดึงทั้งหมด
 export const list = async (req, res) => {
     try {
-        console.log('Crontroller List')
-        res.send('Crontroller List')
+        const listData = await Product.find({}).exec()
+        console.log(listData)
+        res.send(listData)
     } catch {
         console.log(err)
         res.status(400).send('List failed')
     }
 }
 
+// ดึงตามค่า id
 export const read = async (req, res) => {
     try {
-        console.log('Crontroller Read')
-        res.send('Crontroller Read')
+        const readData = await Product.findOne({ _id: req.query.id }).exec()
+        console.log(readData)
+        res.send(readData)
     } catch {
         console.log(err)
         res.status(400).send('Read failed')
     }
 }
 
+//แก้ไข ตาม id
 export const update = async (req, res) => {
     try {
-        console.log('Crontroller Update')
-        res.send('Crontroller Update')
+        const id = req.query.id
+        const updated = await Product.findByIdAndUpdate({ _id: id }, req.body, { new: true }).exec()
+        console.log(updated)
+        res.send(updated)
     } catch {
         console.log(err)
         res.status(400).send('Update failed')
