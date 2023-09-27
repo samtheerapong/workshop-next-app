@@ -1,7 +1,13 @@
+import Product from "@/server/models/products";
+
 export const create = async (req, res) => {
     try {
-        console.log('Crontroller Create')
-        res.send('Crontroller Create')
+        const newproduct = await new Product(req.body).save();
+
+
+
+        console.log(newproduct)
+        res.send(newproduct)
     } catch {
         console.log(err)
         res.status(400).send('Create failed')

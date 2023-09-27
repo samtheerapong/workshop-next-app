@@ -1,4 +1,13 @@
-import { create, update, list, remove, read } from "@/server/controllers/products"
+import { dbConnect  } from "@/server/configs/db"
+import {
+    create,
+    update,
+    list,
+    remove,
+    read
+} from "@/server/controllers/products"
+
+dbConnect();
 
 export default (req, res) => {
     // res.send('hello world')
@@ -12,8 +21,8 @@ export default (req, res) => {
         update(req, res)
     } else if (req.method === 'DELETE') {
         remove(req, res)
-    // } else if (req.method === 'PATCH') {
-    //     req.send('PATCH')
+        // } else if (req.method === 'PATCH') {
+        //     req.send('PATCH')
     } else {
         req.status(400).send('Bad Request')
     }
